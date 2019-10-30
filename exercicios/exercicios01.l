@@ -40,7 +40,8 @@ int main() {
 %}
 
 /*Definicões de Nomes */
-INDENTIFICADOR	[_a-zA-Z][_a-zA-Z0-9]*
+INDENTIFICADOR		[_a-zA-Z][_a-zA-Z0-9]*
+OPERADOR_MATEMATICO	[+|-|/|*|^|%]
 
 /* FIM DA SEÇÃO DE DEFINIÇÕES */
 %%
@@ -54,12 +55,9 @@ INDENTIFICADOR	[_a-zA-Z][_a-zA-Z0-9]*
 int|float|unsigned|if|print|include {printf("<Palavra Reservada, %s>", yytext); contador++;}
 {INDENTIFICADOR}	{printf ("<Indentificador, %s>", yytext); contador ++; }
 >|<|>=|<=|==|!=		{printf ("Operador Relacional %s>", yytext);}
-\+			{printf("<soma,>"); contador++;}
-\-			{printf("<subtração,>"); contador++;}
-\*			{printf("<multiplicação,>"); contador++;}
-[{-}]			{printf("<Chaves, %s>",yytext); contador++;}
-	
-
+{OPERADOR_MATEMATICO}	{printf ("Operador Matematico %s>", yytext);}
+[{|}]			{printf("<Chaves, %s>",yytext); contador++;}
+[[][]]*			{printf ("Colchetes, %s>", yytext);}
 <<EOF>>			return 0;
 
 %%
